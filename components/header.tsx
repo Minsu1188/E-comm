@@ -13,8 +13,8 @@ export default function Header() {
   if (!mounted) return null;
 
   return (
-    <header className="w-full bg-[#02040a] pt-8 px-8 font-sans antialiased">
-      <nav className="relative flex items-center justify-between max-w-5xl mx-auto h-12 px-6 bg-white/10 backdrop-blur-none  border-white/20  border rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+    <header className="w-full pt-8 px-8 font-sans antialiased">
+      <nav className="relative flex items-center justify-between max-w-5xl mx-auto h-12 px-6 backdrop-blur-none  border-white/20  border rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
         <div className="flex items-center gap-2.5 group cursor-pointer">
           <span className="text-white font-semibold text-[15px] tracking-tight">
             AVENIR
@@ -28,9 +28,11 @@ export default function Header() {
             </a>
           </li>
 
-          {/* Дропдаун цэсийг li дотор хийснээр бусадтайгаа ижил түвшинд голлоно */}
+       
           <li className="hover:text-white transition-all">
             <DropdownMenuDemo />
+
+
           </li>
 
           <li>
