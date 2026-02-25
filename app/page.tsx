@@ -2,20 +2,26 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="flex justify-center items-center flex-col h-screen">
-        <h1 className="text-center text-white text-3xl md:text-5xl font-bold max-w-4xl mx-auto drop-shadow-2xl">
-          "Feel confident every day. <br /> 
-          Premium comfort, the best choices curated just for you."
+    <div className="relative min-h-screen w-full overflow-hidden bg-[#fafbfd] flex items-center justify-center">
+      <div
+        className="absolute -translate-x-1/2 -translate-y-1/2 flex justify-center items-center
+              top-1/2 left-1/2
+              w-175 h-125 rounded-[100%] 
+              bg-[#c3cfdf] opacity-45 blur-[100px]"
+      ></div>
+
+      <div className="relative z-10 w-full max-w-6xl px-10">
+        <h1 className="text-[200px] font-bold text-white leading-none tracking-tighter opacity-90">
+          AVENIR
         </h1>
+      </div>
 
-         <div className="flex justify-center items-center mt-10">
-          <button className="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-[0_0_30px_rgba(37,99,235,0.3)] transition-all hover:-translate-y-0.5 active:scale-95">
-            Shop Now!
-          </button>
-          
-        </div> 
-    </main>
-  )
+      <div className="flex justify-center items-center mt-10">
+        <button className="px-8 py-3 text-white font-bold rounded-xl shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all hover:-translate-y-0.5 active:scale-95">
+          Shop Now!
+        </button>
+      </div>
+      
+    </div>
+  );
 }
-  
-
