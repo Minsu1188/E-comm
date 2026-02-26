@@ -3,13 +3,21 @@
 
 @theme {
   --font-zalando: "Zalando Sans Expanded", sans-serif;
+  --font-tangerine: "Tangerine", cursive;
 }
 
-@font-face {
-  font-family: 'Zalando Sans Expanded';
-  src: url('/fonts/ZalandoSansExpanded-Bold.ttf') format('woff2'); 
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
+@layer components {
+  .hero-title {
+    font-family: var(--font-tangerine);
+    @apply text-[220px] lg:text-[280px] xl:text-[340px] 
+           leading-[0.55] text-gray-700 select-none;
+  }
 
+  .ring-container {
+    @apply absolute z-20 pointer-events-none flex justify-center items-center;
+    @apply w-[400px] h-[400px] lg:w-[500px] lg:h-[500px] xl:w-[650px] xl:h-[650px];
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

@@ -3,6 +3,9 @@
 import React, { useEffect, useState } from "react";
 import { DropdownMenuDemo } from "./dropdownMenuDemo";
 import { ShoppingCart }from "lucide-react"
+import '@fontsource/lobster-two';
+import '@fontsource/libre-baskerville';
+import '@fontsource/quintessential';
 
 export default function Header() {
   const [mounted, setMounted] = useState(false);
@@ -22,31 +25,35 @@ export default function Header() {
                       shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
       >
         <div className="flex items-center gap-2.5 group cursor-pointer">
-          <span className="text-gray-600 font-bold text-[14px]">
+          <span 
+          style={{ fontFamily: "'Quintessential', cursive" }}
+          className="text-gray-500 font-bold text-[16px]">
             AVENIR
           </span>
         </div>
 
-        <ul className="hidden md:flex items-center justify-center gap-13 text-gray-500 text-[14px] font-zalando tracking-wide">
+        <ul 
+        style={{ fontFamily: "'Lobster Two', cursive" }}
+        className="hidden md:flex items-center justify-center gap-13 text-gray-500 text-[16px] font-bold tracking-wide">
           <li>
-            <a href="/" className="hover:text-shadow-gray-400 transition-colors">
+            <a href="/" className="hover:text-gray-600 hover:text-shadow-lg transition-colors">
               Home
             </a>
           </li>
           <li>
-            <a href="/shop" className="transition-colors">
+            <a href="/shop" className="hover:text-gray-700 hover:text-shadow-lg transition-colors">
               Shop
             </a>
           </li>
           <li>
-            <a href="/about" className="transition-colors">
+            <a href="/about" className="hover:text-gray-700 hover:text-shadow-lg transition-colors">
               Login 
             </a>
           </li>  
         </ul>
 
         <div className="flex items-center">
-          <button className="p-2 bg-white/10 text-gray-500 hover:bg-white/20 text-[12px] font-bold rounded-full transition-all active:scale-95 shadow-lg">
+          <button className="p-2 bg-white hover:bg-gray-400 text-gray-500 hover:text-white 0 text-[12px] font-bold rounded-full transition-all active:scale-95 shadow-lg">
             <ShoppingCart size={15} />
           </button>
         </div>
