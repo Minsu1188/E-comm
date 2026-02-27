@@ -9,15 +9,36 @@
 @layer components {
   .hero-title {
     font-family: var(--font-tangerine);
-    @apply text-[220px] lg:text-[280px] xl:text-[340px] 
-           leading-[0.55] text-gray-700 select-none;
+    @apply text-[220px] lg:text-[120px] xl:text-[340px] leading-[0.55] text-gray-700 select-none;
   }
 
   .ring-container {
     @apply absolute z-20 pointer-events-none flex justify-center items-center;
-    @apply w-[400px] h-[400px] lg:w-[500px] lg:h-[500px] xl:w-[650px] xl:h-[650px];
+    @apply w-[400px] h-[200px] ;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
+}
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+}
+
+/* Хэрэв Tailwind-ийн config ажиллахгүй бол шууд CSS-ээр хазайлтыг нь өгч болно */
+.ring-left {
+  transform: rotateY(-25deg) translateX(-40px) scale(0.9);
+  opacity: 0.8;
+}
+
+.ring-center {
+  z-index: 20;
+  transform: scale(1.2) translateY(-10px);
+  filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.15));
+}
+
+.ring-right {
+  transform: rotateY(25deg) translateX(40px) scale(0.9);
+  opacity: 0.8;
 }
