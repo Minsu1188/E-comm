@@ -3,7 +3,7 @@
 import Header from "@/components/header";
 import React, { useState, useMemo } from "react";
 
-// 1. Төрөл тодорхойлох
+
 interface ProductType {
   id: number;
   name: string;
@@ -16,13 +16,16 @@ interface ProductType {
   specification: string;
 }
 
-// ✅ ДОТОР ТАЛЫН МЕНЮГ ЗАГВАРЧЛАХАД ЗОРИУЛСАН КОМПОНЕНТ
+interface CartItem extends ProductType {
+  quantity: number;
+}
+
 const StyledSelect = ({ label, options, value, onChange }: any) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="relative inline-block text-left">
-      {/* ГАДНА ТАЛ: Чиний яг өмнөх className-үүд */}
+
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -32,7 +35,6 @@ const StyledSelect = ({ label, options, value, onChange }: any) => {
         <span className={`text-[10px] transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}>▼</span>
       </button>
 
-      {/* ДОТОР ТАЛЫН МЕНЮ: Энийг л бид "design"-даж байна */}
       {isOpen && (
         <>
           <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)}></div>
@@ -57,210 +59,79 @@ const StyledSelect = ({ label, options, value, onChange }: any) => {
 };
 
 export default function JewelryShop() {
-  const [cartCount, setCartCount] = useState<number>(0);
   const [selectedProduct, setSelectedProduct] = useState<ProductType | null>(null);
 
   const [filterCategory, setFilterCategory] = useState<string>("All");
   const [filterMaterial, setFilterMaterial] = useState<string>("All");
   const [sortOrder, setSortOrder] = useState<string>("default");
 
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
   const products: ProductType[] = [
-    {
-      id: 1,
-      name: "Classic Gold Hoop",
-      category: "Earrings",
-      material: "Gold",
-      price: 120000,
-      currency: "MNT",
-      src: "/images/goldEar-1.png",
-      description: "Тансаг зэрэглэлийн 18к алтан бүрээстэй ээмэг.",
-      specification: "Материал: 18к Алт, Хэмжээ: 20мм, Жин: 1.5г",
-    },
-    {
-      id: 2,
-      name: "Silver Moon Studs",
-      category: "Earrings",
-      material: "Silver",
-      price: 45000,
-      currency: "MNT",
-      src: "/images/sillEar-2.png",
-      description: "Өдөр тутам зүүхэд тохиромжтой мөнгөн ээмэг.",
-      specification: "Материал: 925 Мөнгө, Чулуу: Циркон",
-    },
-    {
-      id: 3,
-      name: "Royal Gold Necklace",
-      category: "Necklaces",
-      material: "Gold",
-      price: 350000,
-      currency: "MNT",
-      src: "/images/goldNeck-1.png",
-      description: "Онцгой баярт зориулсан алтан зүүлт.",
-      specification: "Урт: 45см, Материал: 14к Цэвэр алт",
-    },
-    {
-      id: 4,
-      name: "Minimalist Silver Chain",
-      category: "Necklaces",
-      material: "Silver",
-      price: 85000,
-      currency: "MNT",
-      src: "/images/Neck-2.png",
-      description: "Минималист хэв маягт тохирох нарийн гинж.",
-      specification: "Урт: 40см, Материал: 925 Мөнгө",
-    },
-    {
-      id: 5,
-      name: "Diamond Silver Ring",
-      category: "Rings",
-      material: "Silver",
-      price: 500000,
-      currency: "MNT",
-      src: "/images/1-ring.png",
-      description: "Гэрлэн дор солонгорох алмазан шигтгээтэй бөгж.",
-      specification: "Хэмжээ: 16-18, Материал: 18к Алт",
-    },
-    {
-      id: 6,
-      name: "Simple Silver Band",
-      category: "Rings",
-      material: "Silver",
-      price: 60000,
-      currency: "MNT",
-      src: "/images/2-ring.png",
-      description: "Цэвэрхэн хийцтэй мөнгөн бөгж.",
-      specification: "Хэмжээ: Сонголттой, Материал: 925 Мөнгө",
-    },
-    {
-      id: 7,
-      name: "Luxury Gold Choker",
-      category: "Necklaces",
-      material: "Gold",
-      price: 420000,
-      currency: "MNT",
-      src: "/images/goldNeck-2.png",
-      description: "Гоёмсог хийцтэй алтан чокер.",
-      specification: "Материал: 14к Алт, Урт: 35см",
-    },
-    {
-      id: 8,
-      name: "Vintage Silver Earrings",
-      category: "Earrings",
-      material: "Silver",
-      price: 75000,
-      currency: "MNT",
-      src: "/images/silverEar-1.png",
-      description: "Винтаж загварын мөнгөн ээмэг.",
-      specification: "Материал: 925 Мөнгө, Жин: 3.2г",
-    },
-    {
-      id: 9,
-      name: "Rose Gold Promise Ring",
-      category: "Rings",
-      material: "Silver",
-      price: 280000,
-      currency: "MNT",
-      src: "/images/4-ring.png",
-      description: "Ягаан алтлаг өнгөтэй амлалтын бөгж.",
-      specification: "Материал: 18к Rose Gold",
-    },
-    {
-      id: 10,
-      name: "Infinity Silver Necklace",
-      category: "Necklaces",
-      material: "Silver",
-      price: 95000,
-      currency: "MNT",
-      src: "/images/silverNeck-3.png",
-      description: "Үүрдийн хайрыг бэлгэдэх хязгааргүй тэмдэгтэй зүүлт.",
-      specification: "Материал: 925 Мөнгө",
-    },
-    {
-      id: 11,
-      name: "Pearl Gold Drop",
-      category: "Earrings",
-      material: "Gold",
-      price: 185000,
-      currency: "MNT",
-      src: "/images/goldEar-2.png",
-      description: "Байгалийн сувдтай алтан унждаг ээмэг.",
-      specification: "Материал: 14к Алт, Байгалийн сувд",
-    },
-    {
-      id: 12,
-      name: "Snake Skin Silver Ring",
-      category: "Necklaces",
-      material: "Silver",
-      price: 110000,
-      currency: "MNT",
-      src: "/images/neck-1.png",
-      description: "Этгээд загварын могойн хээтэй мөнгөн бөгж.",
-      specification: "Материал: 925 Мөнгө, Оксиджуулсан",
-    },
-    {
-      id: 13,
-      name: "Luxury Golden Chain",
-      category: "Necklaces",
-      material: "Gold",
-      price: 450000,
-      currency: "MNT",
-      src: "/images/goldNeck-3.png",
-      description: "Цэвэр алтан бүрээстэй, тансаг зэрэглэлийн нарийн хийцтэй зүүлт.",
-      specification: "Материал: 18к Алтан бүрээс, Урт: 45см",
-    },
-    {
-      id: 14,
-      name: "Golden Heart Earrings",
-      category: "Earrings",
-      material: "Gold",
-      price: 180000,
-      currency: "MNT",
-      src: "/images/goldEar-3.png",
-      description: "Зүрхэн хэлбэртэй, ямар ч хувцаслалтад тохирох эмэгтэйлэг загварын ээмэг.",
-      specification: "Материал: 14к Алт, Түгжээ: Эрвээхэй",
-    },
-    {
-      id: 15,
-      name: "Silver Crystal Drops",
-      category: "Earrings",
-      material: "Silver",
-      price: 95000,
-      currency: "MNT",
-      src: "/images/silEar-3.png",
-      description: "Гэрэлд солонгорон харагдах болор шигтгээтэй мөнгөн унждаг ээмэг.",
-      specification: "Материал: 925 Мөнгө, Чулуу: Сваровски Болор",
-    },
+    { id: 1, name: "Classic Gold Hoop", category: "Earrings", material: "Gold", price: 120000, currency: "MNT", src: "/images/goldEar-1.png", description: "Тансаг зэрэглэлийн 18к алтан бүрээстэй ээмэг.", specification: "Материал: 18к Алт, Хэмжээ: 20мм, Жин: 1.5г" },
+    { id: 2, name: "Silver Moon Studs", category: "Earrings", material: "Silver", price: 45000, currency: "MNT", src: "/images/sillEar-2.png", description: "Өдөр тутам зүүхэд тохиромжтой мөнгөн ээмэг.", specification: "Материал: 925 Мөнгө, Чулуу: Циркон" },
+    { id: 3, name: "Royal Gold Necklace", category: "Necklaces", material: "Gold", price: 350000, currency: "MNT", src: "/images/goldNeck-1.png", description: "Онцгой баярт зориулсан алтан зүүлт.", specification: "Урт: 45см, Материал: 14к Цэвэр алт" },
+    { id: 4, name: "Minimalist Silver Chain", category: "Necklaces", material: "Silver", price: 85000, currency: "MNT", src: "/images/Neck-2.png", description: "Минималист хэв маягт тохирох нарийн гинж.", specification: "Урт: 40см, Материал: 925 Мөнгө" },
+    { id: 5, name: "Diamond Silver Ring", category: "Rings", material: "Silver", price: 500000, currency: "MNT", src: "/images/1-ring.png", description: "Гэрлэн дор солонгорох алмазан шигтгээтэй бөгж.", specification: "Хэмжээ: 16-18, Материал: 18к Алт" },
+    { id: 6, name: "Simple Silver Band", category: "Rings", material: "Silver", price: 60000, currency: "MNT", src: "/images/2-ring.png", description: "Цэвэрхэн хийцтэй мөнгөн бөгж.", specification: "Хэмжээ: Сонголттой, Материал: 925 Мөнгө" },
+    { id: 7, name: "Luxury Gold Choker", category: "Necklaces", material: "Gold", price: 420000, currency: "MNT", src: "/images/goldNeck-2.png", description: "Гоёмсог хийцтэй алтан чокер.", specification: "Материал: 14к Алт, Урт: 35см" },
+    { id: 8, name: "Vintage Silver Earrings", category: "Earrings", material: "Silver", price: 75000, currency: "MNT", src: "/images/silverEar-1.png", description: "Винтаж загварын мөнгөн ээмэг.", specification: "Материал: 925 Мөнгө, Жин: 3.2г" },
+    { id: 9, name: "Rose Gold Promise Ring", category: "Rings", material: "Silver", price: 280000, currency: "MNT", src: "/images/4-ring.png", description: "Ягаан алтлаг өнгөтэй амлалтын бөгж.", specification: "Материал: 18к Rose Gold" },
+    { id: 10, name: "Infinity Silver Necklace", category: "Necklaces", material: "Silver", price: 95000, currency: "MNT", src: "/images/silverNeck-3.png", description: "Үүрдийн хайрыг бэлгэдэх хязгааргүй тэмдэгтэй зүүлт.", specification: "Материал: 925 Мөнгө" },
+    { id: 11, name: "Pearl Gold Drop", category: "Earrings", material: "Gold", price: 185000, currency: "MNT", src: "/images/goldEar-2.png", description: "Байгалийн сувдтай алтан унждаг ээмэг.", specification: "Материал: 14к Алт, Байгалийн сувд" },
+    { id: 12, name: "Snake Skin Silver Ring", category: "Necklaces", material: "Silver", price: 110000, currency: "MNT", src: "/images/neck-1.png", description: "Этгээд загварын могойн хээтэй мөнгөн бөгж.", specification: "Материал: 925 Мөнгө, Оксиджуулсан" },
+    { id: 13, name: "Luxury Golden Chain", category: "Necklaces", material: "Gold", price: 450000, currency: "MNT", src: "/images/goldNeck-3.png", description: "Цэвэр алтан бүрээстэй, тансаг зэрэглэлийн нарийн хийцтэй зүүлт.", specification: "Материал: 18к Алтан бүрээс, Урт: 45см" },
+    { id: 14, name: "Golden Heart Earrings", category: "Earrings", material: "Gold", price: 180000, currency: "MNT", src: "/images/goldEar-3.png", description: "Зүрхэн хэлбэртэй, ямар ч хувцаслалтад тохирох эмэгтэйлэг загварын ээмэг.", specification: "Материал: 14к Алт, Түгжээ: Эрвээхэй" },
+    { id: 15, name: "Silver Crystal Drops", category: "Earrings", material: "Silver", price: 95000, currency: "MNT", src: "/images/silEar-3.png", description: "Гэрэлд солонгорон харагдах болор шигтгээтэй мөнгөн унждаг ээмэг.", specification: "Материал: 925 Мөнгө, Чулуу: Сваровски Болор" },
   ];
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
-
-    if (filterCategory !== "All") {
-      result = result.filter((p) => p.category === filterCategory);
-    }
-    if (filterMaterial !== "All") {
-      result = result.filter((p) => p.material === filterMaterial);
-    }
-
-    if (sortOrder === "lowToHigh") {
-      result.sort((a, b) => a.price - b.price);
-    } else if (sortOrder === "highToLow") {
-      result.sort((a, b) => b.price - a.price);
-    }
-
+    if (filterCategory !== "All") result = result.filter((p) => p.category === filterCategory);
+    if (filterMaterial !== "All") result = result.filter((p) => p.material === filterMaterial);
+    if (sortOrder === "lowToHigh") result.sort((a, b) => a.price - b.price);
+    else if (sortOrder === "highToLow") result.sort((a, b) => b.price - a.price);
     return result;
   }, [filterCategory, filterMaterial, sortOrder]);
 
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setCartCount((prev) => prev + 1);
+  // --- ШИНЭ САГСНЫ ФУНКЦУУД ---
+  const handleAddToCart = (product: ProductType, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setCartItems((prev) => {
+      const existing = prev.find((item) => item.id === product.id);
+      if (existing) {
+        return prev.map((item) =>
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      }
+      return [...prev, { ...product, quantity: 1 }];
+    });
+    setIsCartOpen(true);
   };
+
+  const updateQuantity = (id: number, delta: number) => {
+    setCartItems(prev => prev.map(item => 
+      item.id === id ? { ...item, quantity: Math.max(1, item.quantity + delta) } : item
+    ));
+  };
+
+  const removeFromCart = (id: number) => {
+    setCartItems(prev => prev.filter(item => item.id !== id));
+  };
+
+  const totalCartPrice = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <div className="bg-white min-h-screen pt-5">
-      <Header cartCount={cartCount} />
+      {/* HEADER-ийг дарахад сагс нээгдэхээр холбосон */}
+      <Header 
+      cartCount={cartCount} 
+      onCartClick={() => setIsCartOpen(true)} 
+    />
       
-      {/* SECTION: FILTERS */}
+      {/* SECTION: FILTERS (Чиний стайл хэвээрээ) */}
       <section className="max-w-7xl mx-auto pt-28 p-6 flex flex-wrap gap-4 items-center justify-between border-b mb-8">
         <div className="flex flex-wrap gap-4">
           <StyledSelect 
@@ -302,7 +173,7 @@ export default function JewelryShop() {
         </p>
       </section>
 
-      {/* MAIN: PRODUCT GRID */}
+      {/* MAIN: PRODUCT GRID (Чиний стайл хэвээрээ) */}
       <main className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         {filteredProducts.map((product) => (
           <div
@@ -317,7 +188,7 @@ export default function JewelryShop() {
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <button
-                onClick={handleAddToCart}
+                onClick={(e) => handleAddToCart(product, e)}
                 className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-sm py-3 rounded-2xl font-bold text-[10px] tracking-widest opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 hover:bg-black hover:text-white"
               >
                 QUICK ADD +
@@ -338,9 +209,67 @@ export default function JewelryShop() {
         ))}
       </main>
 
-      {/* MODAL: PRODUCT DETAILS */}
+      {/* --- САГСНЫ SIDEBAR MENU --- */}
+      {isCartOpen && (
+        <div className="fixed inset-0 z-[150]">
+          <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" onClick={() => setIsCartOpen(false)} />
+          <div className="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl animate-in slide-in-from-right duration-300 flex flex-col">
+            <div className="p-6 border-b flex justify-between items-center bg-gray-50">
+              <h2 className="text-xl font-serif">Shopping Bag</h2>
+              <button onClick={() => setIsCartOpen(false)} className="text-2xl">&times;</button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-6 space-y-6">
+              {cartItems.length === 0 ? (
+                <div className="h-full flex flex-col items-center justify-center text-gray-400 italic">Your bag is empty</div>
+              ) : (
+                cartItems.map((item) => (
+                  <div key={item.id} className="flex gap-4 border-b pb-6 group">
+                    <img 
+                      src={item.src} 
+                      className="w-20 h-24 object-cover rounded-xl cursor-pointer" 
+                      onClick={() => { setSelectedProduct(item); setIsCartOpen(false); }} 
+                    />
+                    <div className="flex-1">
+                      <h3 className="text-sm font-medium">{item.name}</h3>
+                      <p className="text-xs text-gray-400 mt-1">{item.price.toLocaleString()}₮</p>
+                      <div className="flex items-center gap-4 mt-3">
+                        <div className="flex items-center border rounded-full px-3 py-1 scale-90 origin-left">
+                          <button onClick={() => updateQuantity(item.id, -1)} className="px-2">-</button>
+                          <span className="text-sm font-bold w-4 text-center">{item.quantity}</span>
+                          <button onClick={() => updateQuantity(item.id, 1)} className="px-2">+</button>
+                        </div>
+                        <button onClick={() => removeFromCart(item.id)} className="text-[10px] text-red-400 underline opacity-0 group-hover:opacity-100 transition-opacity">Remove</button>
+                      </div>
+                    </div>
+                    <p className="text-sm font-bold">{(item.price * item.quantity).toLocaleString()}₮</p>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {cartItems.length > 0 && (
+              <div className="p-6 border-t bg-gray-50 space-y-4">
+                <div className="space-y-2 text-sm">
+                  <input type="text" placeholder="Shipping Address..." className="w-full p-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-1 ring-black bg-white" />
+                  <div className="flex justify-between font-bold text-lg pt-2 border-t mt-2">
+                    <span>Total</span>
+                    <span>{totalCartPrice.toLocaleString()}₮</span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <button className="bg-white border border-black text-black py-4 rounded-xl text-[10px] font-bold tracking-widest hover:bg-black hover:text-white transition-all">BANK APP</button>
+                  <button className="bg-black text-white py-4 rounded-xl text-[10px] font-bold tracking-widest hover:bg-gray-800 transition-all shadow-lg">PAY BY CARD</button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* MODAL: PRODUCT DETAILS (Чиний стиль хэвээрээ) */}
       {selectedProduct && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-[100] flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-[200] flex items-center justify-center p-4">
           <div className="bg-white max-w-4xl w-full rounded-[2.5rem] overflow-hidden flex flex-col md:flex-row shadow-2xl relative animate-in fade-in zoom-in duration-300">
             <button
               onClick={() => setSelectedProduct(null)}
@@ -371,26 +300,18 @@ export default function JewelryShop() {
 
               <div className="space-y-6 mb-10">
                 <div>
-                  <h4 className="text-[10px] font-bold uppercase text-gray-400 mb-2 tracking-widest">
-                    About the piece
-                  </h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">
-                    {selectedProduct.description}
-                  </p>
+                  <h4 className="text-[10px] font-bold uppercase text-gray-400 mb-2 tracking-widest">About the piece</h4>
+                  <p className="text-sm text-gray-600 leading-relaxed">{selectedProduct.description}</p>
                 </div>
                 <div>
-                  <h4 className="text-[10px] font-bold uppercase text-gray-400 mb-2 tracking-widest">
-                    Details
-                  </h4>
-                  <p className="text-xs text-gray-500 italic bg-gray-50 p-4 rounded-2xl border border-gray-100">
-                    {selectedProduct.specification}
-                  </p>
+                  <h4 className="text-[10px] font-bold uppercase text-gray-400 mb-2 tracking-widest">Details</h4>
+                  <p className="text-xs text-gray-500 italic bg-gray-50 p-4 rounded-2xl border border-gray-100">{selectedProduct.specification}</p>
                 </div>
               </div>
 
               <button
                 onClick={(e) => {
-                  handleAddToCart(e);
+                  handleAddToCart(selectedProduct, e);
                   setSelectedProduct(null);
                 }}
                 className="w-full bg-black text-white py-5 rounded-[1.5rem] font-bold hover:bg-gray-800 transition-all shadow-xl active:scale-[0.98] tracking-widest text-xs"

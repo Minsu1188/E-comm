@@ -12,7 +12,6 @@ export default function Home() {
         rounded-full bg-[#c3cfdf] opacity-45 blur-[100px] z-0"
       />
 
-      {/* <div className="relative flex flex-col items-center justify-center"> */}
         <div className="flex flex-col items-center leading-[0.6] select-none space-y-4">
           {/* Eternal */}
           <h1
@@ -25,7 +24,6 @@ export default function Home() {
             Eternal
           </h1>
 
-          {/* Elegance */}
           <h1
             style={{ fontFamily: "'Tangerine', cursive" }}
             className="
@@ -38,7 +36,6 @@ export default function Home() {
           </h1>
         </div>
 
-        {/* Ring Image */}
         <div
           className="
             absolute z-20
