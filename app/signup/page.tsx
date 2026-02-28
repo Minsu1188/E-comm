@@ -66,7 +66,7 @@ export default function JewelryAuthPage() {
               Create Account
             </h1>
             <p className="text-gray-400 mb-8 text-sm uppercase tracking-widest">
-              Join our exclusive circle
+              Let's shine together
             </p>
 
             <form className="flex flex-col gap-4 w-full border border-gray-100 rounded-3xl p-10 bg-white/50">
@@ -120,7 +120,7 @@ export default function JewelryAuthPage() {
           <div className="z-10 animate-fadeIn">
             {isSignUp ? (
               <>
-                <h2 className="text-4xl font-serif mb-4 italic">
+                <h2 className="text-3xl font-serif mb-4 italic">
                   "Үнэ цэнэ, гоо үзэсгэлэнгийн Давтагдашгүй хослол."
                 </h2>
                 <p className="opacity-90 font-light mb-10 leading-relaxed text-sm">

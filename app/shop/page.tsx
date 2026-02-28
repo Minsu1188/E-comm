@@ -297,7 +297,7 @@ export default function JewelryShop() {
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <div className="bg-white min-h-screen pt-5">
+    <div className="bg-white min-h-screen pt-5 ">
       <Header cartCount={cartCount} onCartClick={() => setIsCartOpen(true)} />
 
       <section className="max-w-7xl mx-auto pt-28 p-6 flex flex-wrap gap-4 items-center justify-between border-b mb-8">
@@ -342,7 +342,7 @@ export default function JewelryShop() {
       </section>
 
 
-      <main className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <main className="max-w-7xl mx-auto px-6 pt-0 pb-30 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         {filteredProducts.map((product) => (
           <div
             key={product.id}
@@ -432,7 +432,7 @@ export default function JewelryShop() {
                         </div>
                         <button
                           onClick={() => removeFromCart(item.id)}
-                          className="text-[10px] text-red-400 underline opacity-0 group-hover:opacity-100 transition-opacity"
+                          className="text-[10px] text-red-400 no-underline opacity-0 group-hover:opacity-100 transition-opacity"
                         >
                           Remove
                         </button>
@@ -536,6 +536,61 @@ export default function JewelryShop() {
           </div>
         </div>
       )}
+      <div className="relative z-30 w-full border-t border-gray-200">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="h-[40vh] w-[60vw] rounded-full bg-[#c3cfdf] opacity-40 blur-[120px]" />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-6 py-24 grid grid-cols-1 md:grid-cols-3 gap-20 text-gray-600">
+          <div className="space-y-6">
+            <h2
+              style={{ fontFamily: "'Tangerine', cursive" }}
+              className="text-6xl text-gray-700"
+            >
+              Eternal Elegance
+            </h2>
+            <p className="text-sm leading-relaxed text-gray-500 max-w-sm">
+              Timeless jewelry crafted with elegance and precision. Discover
+              pieces that define your forever.
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-gray-400">
+              Navigation
+            </h3>
+            <ul className="space-y-2 text-sm">
+              <li className="hover:text-black transition-colors cursor-pointer">
+                Home
+              </li>
+              <li className="hover:text-black transition-colors cursor-pointer">
+                Shop
+              </li>
+              <li className="hover:text-black transition-colors cursor-pointer">
+                About
+              </li>
+              <li className="hover:text-black transition-colors cursor-pointer">
+                Contact
+              </li>
+            </ul>
+          </div>
+
+          <div className="space-y-6">
+            <h3 className="text-[10px] font-black tracking-[0.4em] uppercase text-gray-400">
+              Contact
+            </h3>
+            <div className="space-y-2 text-sm text-gray-500">
+              <p>ishigxen11@gmail.com</p>
+              <p>+976 8886 4483</p>
+              <p>Ulaanbaatar, Mongolia</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative border-t border-gray-200 py-6 text-center text-xs tracking-[0.3em] uppercase text-gray-400">
+          © 2026 Eternal Elegance. All Rights Reserved.
+        </div>
+      </div>
     </div>
   )
 }

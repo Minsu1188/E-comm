@@ -145,7 +145,7 @@ export default function Home() {
           </a>
         </div>
       </div>
-      <div className="relative z-30 w-full mt-40 border-t border-gray-200">
+      <div className="relative z-30 w-full border-t border-gray-200">
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="h-[40vh] w-[60vw] rounded-full bg-[#c3cfdf] opacity-40 blur-[120px]" />
         </div>
