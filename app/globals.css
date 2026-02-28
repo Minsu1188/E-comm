@@ -6,6 +6,16 @@
   --font-tangerine: "Tangerine", cursive;
 }
 
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; 
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
 @layer components {
   .hero-title {
     font-family: var(--font-tangerine);
@@ -26,7 +36,6 @@
   }
 }
 
-/* Хэрэв Tailwind-ийн config ажиллахгүй бол шууд CSS-ээр хазайлтыг нь өгч болно */
 .ring-left {
   transform: rotateY(-25deg) translateX(-40px) scale(0.9);
   opacity: 0.8;

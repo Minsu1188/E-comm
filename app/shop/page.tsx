@@ -94,7 +94,7 @@ export default function JewelryShop() {
       name: "Silver Moon Studs",
       category: "Earrings",
       material: "Silver",
-      price: 45000,
+        price: 85000,
       currency: "MNT",
       src: "/images/sillEar-2.png",
       description: "Өдөр тутам зүүхэд тохиромжтой мөнгөн ээмэг.",
@@ -193,7 +193,7 @@ export default function JewelryShop() {
       name: "Pearl Gold Drop",
       category: "Earrings",
       material: "Gold",
-      price: 185000,
+      price: 85000,
       currency: "MNT",
       src: "/images/goldEar-2.png",
       description: "Байгалийн сувдтай алтан унждаг ээмэг.",
@@ -201,13 +201,13 @@ export default function JewelryShop() {
     },
     {
       id: 12,
-      name: "Snake Skin Silver Ring",
+      name: "Snake Skin Silver Necklace",
       category: "Necklaces",
       material: "Silver",
       price: 110000,
       currency: "MNT",
       src: "/images/neck-1.png",
-      description: "Этгээд загварын могойн хээтэй мөнгөн бөгж.",
+      description: "Этгээд загварын могойн хээтэй мөнгөн зүүлт.",
       specification: "Материал: 925 Мөнгө, Оксиджуулсан",
     },
     {
@@ -341,6 +341,7 @@ export default function JewelryShop() {
         </p>
       </section>
 
+
       <main className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         {filteredProducts.map((product) => (
           <div
@@ -348,7 +349,7 @@ export default function JewelryShop() {
             className="group cursor-pointer"
             onClick={() => setSelectedProduct(product)}
           >
-            <div className="relative aspect-[3/4] overflow-hidden bg-gray-100 rounded-3xl mb-4 shadow-sm">
+            <div className="relative aspect-3/4 overflow-hidden bg-gray-100 rounded-3xl mb-4 shadow-sm">
               <img
                 src={product.src}
                 alt={product.name}
@@ -472,8 +473,9 @@ export default function JewelryShop() {
         </div>
       )}
 
+
       {selectedProduct && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-[200] flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-md z-200 flex items-center justify-center p-4">
           <div className="bg-white max-w-4xl w-full rounded-[2.5rem] overflow-hidden flex flex-col md:flex-row shadow-2xl relative animate-in fade-in zoom-in duration-300">
             <button
               onClick={() => setSelectedProduct(null)}
@@ -526,7 +528,7 @@ export default function JewelryShop() {
                   handleAddToCart(selectedProduct, e);
                   setSelectedProduct(null);
                 }}
-                className="w-full bg-black text-white py-5 rounded-[1.5rem] font-bold hover:bg-gray-800 transition-all shadow-xl active:scale-[0.98] tracking-widest text-xs"
+                className="w-full bg-black text-white py-5 rounded-3xl font-bold hover:bg-gray-800 transition-all shadow-xl active:scale-[0.98] tracking-widest text-xs"
               >
                 ADD TO CART & CHECKOUT
               </button>
@@ -535,5 +537,5 @@ export default function JewelryShop() {
         </div>
       )}
     </div>
-  );
+  )
 }
