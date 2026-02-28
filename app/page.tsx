@@ -1,11 +1,11 @@
 import Image from "next/image";
 import "@fontsource/tangerine";
 import "@fontsource/tangerine/700.css";
+import JewelryShop from "./shop/page";
 
 export default function Home() {
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-white flex flex-col items-center justify-center">
-      {/* Blur Background */}
       <div
         className="absolute
         h-dvh w-dvw flex items-center justify-center
@@ -13,7 +13,6 @@ export default function Home() {
       />
 
         <div className="flex flex-col items-center leading-[0.6] select-none space-y-4">
-          {/* Eternal */}
           <h1
             style={{ fontFamily: "'Tangerine', cursive" }}
             className="
@@ -52,11 +51,10 @@ export default function Home() {
             priority
           />
         </div>
-      {/* </div> */}
 
       <div className="relative z-30 mt-10 md:mt-20">
-        <button className="px-10 md:px-12 py-3 bg-black text-white rounded-full tracking-widest text-xs md:text-sm uppercase hover:scale-105 transition-all shadow-lg">
-          Shop Now
+        <button onClick={JewelryShop} className="px-10 md:px-12 py-3 bg-black text-white rounded-full tracking-widest text-xs md:text-sm uppercase hover:scale-105 transition-all shadow-lg">
+          <a href="/shop"> Shop Now</a>
         </button>
       </div>
     </main>

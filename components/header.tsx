@@ -1,16 +1,16 @@
 "use client";
 import React from "react";
 import { ShoppingCart } from "lucide-react";
+import Link from "next/link";
 import "@fontsource/lobster-two";
 import "@fontsource/quintessential";
-// Link хэрэггүй болсон тул хаслаа
 
 interface HeaderProps {
-  cartCount: number;
-  onCartClick: () => void; // Сагс нээх функцийг энд нэмлээ
+  cartCount?: number;
+  onCartClick?: () => void;
 }
 
-export default function Header({ cartCount, onCartClick }: HeaderProps) {
+export default function Header({ cartCount = 0, onCartClick }: HeaderProps) {
   return (
     <header className="fixed top-0 left-0 w-full pt-10 px-8 antialiased z-50">
       <nav
@@ -33,26 +33,28 @@ export default function Header({ cartCount, onCartClick }: HeaderProps) {
           className="hidden md:flex items-center justify-center gap-10 text-gray-500 text-[16px] font-bold tracking-wide"
         >
           <li>
-            <a href="/" className="hover:text-gray-900 transition-colors">
+            <Link href="/" className="hover:text-gray-900 transition-colors">
               Home
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/shop" className="hover:text-gray-900 transition-colors">
+            <Link href="/shop" className="hover:text-gray-900 transition-colors">
               Shop
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="/about" className="hover:text-gray-900 transition-colors">
-              Login
-            </a>
+            <Link
+              href="/signup"
+              className="hover:text-gray-900 transition-colors"
+            >
+              Sign Up
+            </Link>
           </li>
         </ul>
 
         <div className="flex items-center relative">
-          {/* Link-ийг Button болгож өөрчлөв. onClick нь sidebar-ийг нээнэ */}
           <button
-            onClick={onCartClick} 
+            onClick={() => onCartClick?.()}
             className="p-2 bg-white hover:bg-gray-100 text-gray-500 rounded-full transition-all active:scale-95 shadow-lg relative"
           >
             <ShoppingCart size={15} />
@@ -65,7 +67,7 @@ export default function Header({ cartCount, onCartClick }: HeaderProps) {
           </button>
         </div>
 
-        <div className="absolute top-0 left-1/4 right-1/4 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+        <div className="absolute top-0 left-1/4 right-1/4 h-px bg-linear-to-r from-transparent via-white/30 to-transparent"></div>
       </nav>
     </header>
   );
